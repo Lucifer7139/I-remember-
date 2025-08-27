@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>For You 💕</title>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;600&family=Poppins:wght@300;400;500&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            color: #4a4a4a;
+            overflow-x: hidden;
+            position: relative;
+        }
+        
+        /* Floating Hearts Animation */
+        .floating-heart {
+            position: fixed;
+            color: #FFB6C1;
+            font-size: 20px;
+            animation: float 6s infinite linear;
+            pointer-events: none;
+            z-index: 1000;
+        }
+        
+        @keyframes float {
+            0% {
+                transform: translateY(100vh) rotate(0deg);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-100px) rotate(360deg);
+                opacity: 0;
+            }
+        }
+        
+        /* Opening Page */
+        .opening-page {
+            height: 100vh;
+            background: linear-gradient(135deg, #ffffff 0%, #AEEEEE 50%, #FFB6C1 100%);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            position: relative;
+        }
+        
+        .welcome-message {
+            font-family: 'Dancing Script', cursive;
+            font-size: 3rem;
+            font-weight: 600;
+            color: #4a4a4a;
+            margin-bottom: 2rem;
+            animation: fadeInUp 2s ease-out;
+        }
+        
+        .start-button {
+            background: linear-gradient(45deg, #FFB6C1, #AEEEEE);
+            border: none;
+            padding: 15px 30px;
+            border-radius: 50px;
+            font-size: 1.2rem;
+            font-weight: 500;
+            color: white;
+            cursor: pointer;
+            box-shadow: 0 8px 25px rgba(255, 182, 193, 0.4);
+            animation: glow 2s infinite alternate, fadeInUp 2.5s ease-out;
+            transition: transform 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .start-button:hover {
+            transform: scale(1.05);
+        }
+        
+        .start-button::before {
+            content: '💖';
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+        
+        @keyframes glow {
+            0% {
+                box-shadow: 0 8px 25px rgba(255, 182, 193, 0.4);
+            }
+            100% {
+                box-shadow: 0 8px 35px rgba(174, 238, 238, 0.6);
+            }
+        }
+        
+        @keyframes fadeInUp {
+            0% {
+                opacity: 0;
+                transform: translateY(50px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        /* Main Content */
+        .main-content {
+            display: none;
+            min-height: 100vh;
+            background: white;
+            padding: 2rem;
+        }
+        
+        .section {
+            max-width: 800px;
+            margin: 2rem auto;
+            background: white;
+            padding: 2rem;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            border: 2px solid rgba(174, 238, 238, 0.2);
+        }
+        
+        .section-title {
+            font-family: 'Dancing Script', cursive;
+            font-size: 2.5rem;
+            color: #4a4a4a;
+            text-align: center;
+            margin-bottom: 1.5rem;
+            background: linear-gradient(45deg, #FFB6C1, #AEEEEE);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        /* Memory Section */
+        .memory-text {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: #4a4a4a;
+            max-height: 400px;
+            overflow-y: auto;
+            padding-right: 10px;
+        }
+        
+        .memory-text::-webkit-scrollbar {
+            width: 8px;
+        }
+        
+        .memory-text::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 10px;
+        }
+        
+        .memory-text::-webkit-scrollbar-thumb {
+            background: linear-gradient(45deg, #FFB6C1, #AEEEEE);
+            border-radius: 10px;
+        }
+        
+        .memory-line {
+            margin-bottom: 1rem;
+            opacity: 0;
+            animation: typewriter 1s ease-out forwards;
+            position: relative;
+        }
+        
+        @keyframes typewriter {
+            0% {
+                opacity: 0;
+                transform: translateX(-20px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+        
+        /* Timer Section */
+        .timer-container {
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+        
+        .timer-card {
+            background: linear-gradient(135deg, rgba(174, 238, 238, 0.1), rgba(255, 182, 193, 0.1));
+            padding: 1.5rem;
+            border-radius: 15px;
+            text-align: center;
+            flex: 1;
+            min-width: 250px;
+            border: 1px solid rgba(174, 238, 238, 0.3);
+        }
+        
+        .timer-title {
+            font-family: 'Dancing Script', cursive;
+            font-size: 1.5rem;
+            color: #4a4a4a;
+            margin-bottom: 1rem;
+        }
+        
+        .timer-display {
+            font-size: 1.2rem;
+            font-weight: 500;
+            color: #4a4a4a;
+        }
+        
+        .time-unit {
+            display: inline-block;
+            margin: 0 0.5rem;
+            padding: 0.5rem;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        /* Footer */
+        .footer {
+            text-align: center;
+            padding: 2rem;
+            font-family: 'Dancing Script', cursive;
+            font-size: 1.5rem;
+            color: #4a4a4a;
+            background: linear-gradient(135deg, rgba(174, 238, 238, 0.1), rgba(255, 182, 193, 0.1));
+            margin-top: 2rem;
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .welcome-message {
+                font-size: 2rem;
+            }
+            
+            .section {
+                margin: 1rem;
+                padding: 1.5rem;
+            }
+            
+            .timer-container {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Opening Page -->
+    <div class="opening-page" id="openingPage">
+        <div class="welcome-message">
+            For the one who makes me smile the most 💕
+        </div>
+        <button class="start-button" onclick="startJourney()">
+            &nbsp;&nbsp;&nbsp;&nbsp;Start
+        </button>
+    </div>
+    
+    <!-- Main Content -->
+    <div class="main-content" id="mainContent">
+        <!-- Memory Section -->
+        <div class="section">
+            <h2 class="section-title">Our Memories</h2>
+            <div class="memory-text" id="memoryText">
+                <!-- Memory lines will be inserted here by JavaScript -->
+            </div>
+        </div>
+        
+        <!-- Timer Section -->
+        <div class="section">
+            <h2 class="section-title">Our Time Together</h2>
+            <div class="timer-container">
+                <div class="timer-card">
+                    <div class="timer-title">Since we met 💖</div>
+                    <div class="timer-display" id="metTimer">
+                        <span class="time-unit"><span id="metDays">0</span> days</span>
+                        <span class="time-unit"><span id="metHours">0</span> hours</span>
+                        <span class="time-unit"><span id="metMinutes">0</span> minutes</span>
+                        <span class="time-unit"><span id="metSeconds">0</span> seconds</span>
+                    </div>
+                </div>
+                <div class="timer-card">
+                    <div class="timer-title">Since we started dating 💕</div>
+                    <div class="timer-display" id="datingTimer">
+                        <span class="time-unit"><span id="dateDays">0</span> days</span>
+                        <span class="time-unit"><span id="dateHours">0</span> hours</span>
+                        <span class="time-unit"><span id="dateMinutes">0</span> minutes</span>
+                        <span class="time-unit"><span id="dateSeconds">0</span> seconds</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Footer -->
+    <div class="footer">
+        You make me happy 💖 – Sohum
+    </div>
+    
+    <!-- Background Music -->
+    <audio id="backgroundMusic" loop>
+        <source src="https://www.soundjay.com/misc/sounds/magic-chime-02.wav" type="audio/wav">
+    </audio>
+    
+    <script>
+        const memories = [
+            "It's been six months since I've known you… and three of those months, we've been together. But it feels like I've known you forever.",
+            "",
+            "I still remember the very first time you spoke to me, when you shared your thoughts and feelings so openly.",
+            "I remember our very first video call… how shy yet happy I felt seeing your face on my screen. 🎥",
+            "I remember how you made time for me, even downloading apps just so we could play together. 🎮",
+            "I remember how we explored Minecraft like little kids, laughing at every silly moment.",
+            "I remember showing you my grandmother's house, and how you listened as if every corner of my world mattered to you. 🏠",
+            "I remember when you confessed your feelings in Hindi, and my heart stopped for a second because it felt so real. 💕",
+            "I remember the way you laughed with me until our stomachs hurt, and how you never let a single video call pass without making me smile. 😂",
+            "",
+            "I remember how you watched me flip roti in the kitchen, as if it was the most magical thing you had ever seen. 🍲",
+            "I remember showing you the little spot where I used to hide my money—like I was giving you a secret part of me. 💰",
+            "I remember when you dedicated that song to me while I was studying… it made me feel seen, loved, and chosen. 🎶",
+            "I remember asking you for advice about starting my YouTube channel, because I trusted your words more than my own. 📹",
+            "I remember how you laughed when I burped, how you teased me about the smallest things—even the sound of my pee. 🙈",
+            "I remember how goofy I became after spicy food, and how you loved me even in those messy little moments. 🌶️",
+            "",
+            "I remember how we talked about dreams, even if it was just for a while. ✨",
+            "I remember the wallpapers you made for me, with so much care. 🎨",
+            "I remember sending you the tiniest video of me crunching on something, and how you held onto it like a treasure. 📱",
+            "I remember saying \"hello\" at the start of every call, and how that one word meant another memory was about to begin. 👋",
+            "",
+            "Every single call with you made me happy.",
+            "Every moment with you filled me with laughter, warmth, and love.",
+            "You made me giggle. You made me smile.",
+            "You make me happy… always. 💖"
+        ];
+        
+        function startJourney() {
+            document.getElementById('openingPage').style.display = 'none';
+            document.getElementById('mainContent').style.display = 'block';
+            
+            // Start background music (commented out due to autoplay restrictions)
+            // document.getElementById('backgroundMusic').play();
+            
+            startTypewriter();
+            startTimers();
+            createFloatingHearts();
+        }
+        
+        function startTypewriter() {
+            const memoryContainer = document.getElementById('memoryText');
+            let index = 0;
+            
+            function typeNextLine() {
+                if (index < memories.length) {
+                    const line = document.createElement('div');
+                    line.className = 'memory-line';
+                    line.textContent = memories[index];
+                    line.style.animationDelay = '0s';
+                    memoryContainer.appendChild(line);
+                    
+                    index++;
+                    setTimeout(typeNextLine, 800); // Delay between each line
+                }
+            }
+            
+            typeNextLine();
+        }
+        
+        function startTimers() {
+            // Start dates
+            const metDate = new Date('2025-04-14T00:00:00');
+            const datingDate = new Date('2025-05-26T00:00:00');
+            
+            function updateTimers() {
+                const now = new Date();
+                
+                // Since we met
+                const metDiff = now - metDate;
+                const metDays = Math.floor(metDiff / (1000 * 60 * 60 * 24));
+                const metHours = Math.floor((metDiff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const metMinutes = Math.floor((metDiff % (1000 * 60 * 60)) / (1000 * 60));
+                const metSeconds = Math.floor((metDiff % (1000 * 60)) / 1000);
+                
+                document.getElementById('metDays').textContent = metDays;
+                document.getElementById('metHours').textContent = metHours;
+                document.getElementById('metMinutes').textContent = metMinutes;
+                document.getElementById('metSeconds').textContent = metSeconds;
+                
+                // Since dating
+                const dateDiff = now - datingDate;
+                const dateDays = Math.floor(dateDiff / (1000 * 60 * 60 * 24));
+                const dateHours = Math.floor((dateDiff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const dateMinutes = Math.floor((dateDiff % (1000 * 60 * 60)) / (1000 * 60));
+                const dateSeconds = Math.floor((dateDiff % (1000 * 60)) / 1000);
+                
+                document.getElementById('dateDays').textContent = dateDays;
+                document.getElementById('dateHours').textContent = dateHours;
+                document.getElementById('dateMinutes').textContent = dateMinutes;
+                document.getElementById('dateSeconds').textContent = dateSeconds;
+            }
+            
+            updateTimers();
+            setInterval(updateTimers, 1000);
+        }
+        
+        function createFloatingHearts() {
+            function createHeart() {
+                const heart = document.createElement('div');
+                heart.className = 'floating-heart';
+                heart.innerHTML = '💖';
+                heart.style.left = Math.random() * 100 + 'vw';
+                heart.style.animationDuration = (Math.random() * 3 + 4) + 's';
+                document.body.appendChild(heart);
+                
+                setTimeout(() => {
+                    heart.remove();
+                }, 7000);
+            }
+            
+            // Create hearts every few seconds
+            setInterval(createHeart, 3000);
+            
+            // Create initial heart
+            setTimeout(createHeart, 1000);
+        }
+    </script>
+</body>
+</html>
